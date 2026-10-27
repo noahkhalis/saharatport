@@ -54,25 +54,47 @@
             perspective: 1200px;
         }
         .mockup-3d-left {
-            transform: rotateY(25deg) rotateX(12deg) rotateZ(-6deg) scale(0.9);
+            transform: rotateY(25deg) rotateX(12deg) rotateZ(-6deg) scale(0.88);
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: -20px 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 242, 254, 0.15);
+            box-shadow: -20px 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 242, 254, 0.2);
         }
         .mockup-3d-right {
-            transform: rotateY(-20deg) rotateX(10deg) rotateZ(4deg) scale(0.85);
+            transform: rotateY(-20deg) rotateX(10deg) rotateZ(4deg) scale(0.82);
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(124, 58, 237, 0.15);
+            box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(124, 58, 237, 0.2);
         }
         .perspective-container:hover .mockup-3d-left {
-            transform: rotateY(15deg) rotateX(5deg) rotateZ(-2deg) scale(0.95);
+            transform: rotateY(15deg) rotateX(5deg) rotateZ(-2deg) scale(0.92);
         }
         .perspective-container:hover .mockup-3d-right {
-            transform: rotateY(-10deg) rotateX(5deg) rotateZ(1deg) scale(0.9);
+            transform: rotateY(-10deg) rotateX(5deg) rotateZ(1deg) scale(0.88);
+        }
+
+        /* Floating Traffic Badges Animation */
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+        }
+        @keyframes float-reverse {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(10px) rotate(-2deg); }
+        }
+        .animate-float-1 { animation: float-slow 4s ease-in-out infinite; }
+        .animate-float-2 { animation: float-reverse 5s ease-in-out infinite; }
+
+        /* Animated SVG Traffic Line */
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+        .path-animated {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s ease-out forwards infinite;
         }
 
         /* Glassmorphism Panel */
         .glass-panel {
-            background: rgba(15, 21, 35, 0.7);
+            background: rgba(15, 21, 35, 0.75);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -84,7 +106,7 @@
 
         /* Ambient Glow Background */
         .ambient-glow {
-            background: radial-gradient(circle at 50% 30%, rgba(0, 242, 254, 0.12) 0%, rgba(124, 58, 237, 0.08) 40%, rgba(7, 9, 14, 0) 70%);
+            background: radial-gradient(circle at 50% 30%, rgba(0, 242, 254, 0.15) 0%, rgba(124, 58, 237, 0.1) 40%, rgba(7, 9, 14, 0) 70%);
         }
 
         /* Custom Scrollbar */
@@ -140,11 +162,12 @@
     <!-- Main Container -->
     <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20 space-y-28">
 
-        <!-- HERO SECTION -->
+        <!-- HERO SECTION WITH SUIT PROFILE & TRAFFIC ANIMATION -->
         <section id="about" class="pt-8 lg:pt-16 relative">
             <div class="ambient-glow absolute -inset-x-20 top-0 h-[600px] pointer-events-none"></div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
                 <!-- Left Column -->
                 <div class="lg:col-span-6 space-y-6">
                     <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-brand-cyan">
@@ -189,21 +212,52 @@
                     </div>
                 </div>
 
-                <!-- Right Column: 3D Perspective Screen Mockups Showcase -->
+                <!-- Right Column: 3D Cards + Suit Photo Background + Traffic Effects -->
                 <div class="lg:col-span-6 relative perspective-container py-8">
-                    <div class="relative w-full h-[420px] flex items-center justify-center">
+                    <div class="relative w-full h-[460px] flex items-center justify-center">
+
+                        <!-- LAYER 1: SUIT PROFILE PHOTO (BACKGROUND) -->
+                        <div class="absolute inset-0 flex items-center justify-center z-0 opacity-40 hover:opacity-75 transition-opacity duration-500">
+                            <!-- สามารถเปลี่ยน URL รูปโปรไฟล์ใส่สูทตรงนี้ได้เลยครับ -->
+                            <img id="hero-profile-img" 
+                                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop" 
+                                 alt="Saharat (Noah) Profile in Suit" 
+                                 class="h-[380px] w-auto object-cover rounded-3xl filter grayscale contrast-125 mask-linear-gradient shadow-2xl">
+                        </div>
+
+                        <!-- LAYER 2: FLOATING TRAFFIC POP-UP BADGES (ANIMATED) -->
+                        <div class="absolute -top-2 left-4 z-30 animate-float-1">
+                            <div class="px-3.5 py-2 rounded-2xl glass-panel border border-emerald-500/40 text-emerald-300 font-mono text-xs flex items-center gap-2 shadow-xl shadow-emerald-500/10">
+                                <i data-lucide="trending-up" class="w-4 h-4 text-emerald-400"></i>
+                                <span>+340% Organic Traffic</span>
+                            </div>
+                        </div>
+
+                        <div class="absolute bottom-4 right-2 z-30 animate-float-2">
+                            <div class="px-3.5 py-2 rounded-2xl glass-panel border border-cyan-500/40 text-brand-cyan font-mono text-xs flex items-center gap-2 shadow-xl shadow-cyan-500/10">
+                                <i data-lucide="award" class="w-4 h-4 text-brand-cyan"></i>
+                                <span>Page 1 Ranked (3 Months)</span>
+                            </div>
+                        </div>
+
+                        <!-- LAYER 3: FOREGROUND 3D CARDS (ป้ายเดิมสองอัน) -->
                         
-                        <!-- Screen Mockup 1 -->
-                        <div class="absolute z-20 w-[80%] mockup-3d-left rounded-2xl overflow-hidden glass-panel border border-white/20 p-2">
-                            <div class="bg-slate-900 rounded-xl overflow-hidden border border-white/10">
-                                <div class="bg-slate-950 px-3 py-2 flex items-center justify-between border-b border-white/10 text-[10px] font-mono text-slate-400">
+                        <!-- Card 1 (Left) -->
+                        <div class="absolute z-20 w-[78%] mockup-3d-left rounded-2xl overflow-hidden glass-panel border border-white/20 p-2">
+                            <div class="bg-slate-900 rounded-xl overflow-hidden border border-white/10 relative">
+                                <!-- Animated Traffic Curve Overlay -->
+                                <svg class="absolute inset-0 w-full h-full pointer-events-none z-10 opacity-70" viewBox="0 0 300 150">
+                                    <path class="path-animated" d="M0 130 Q70 110, 140 70 T300 10" fill="none" stroke="#00F2FE" stroke-width="3"/>
+                                </svg>
+
+                                <div class="bg-slate-950 px-3 py-2 flex items-center justify-between border-b border-white/10 text-[10px] font-mono text-slate-400 relative z-20">
                                     <span class="flex items-center gap-1.5"><i data-lucide="globe" class="w-3 h-3 text-brand-cyan"></i> Healthcare SEO Growth</span>
                                     <span class="text-emerald-400 font-bold">Google Rank #1-3</span>
                                 </div>
                                 <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1000&auto=format&fit=crop" 
                                      alt="Healthcare SEO Case Study" 
-                                     class="w-full h-48 object-cover opacity-90 hover:opacity-100 transition-opacity">
-                                <div class="p-3 bg-brand-card/90 flex justify-between items-center text-xs">
+                                     class="w-full h-44 object-cover opacity-85">
+                                <div class="p-3 bg-brand-card/95 flex justify-between items-center text-xs relative z-20">
                                     <div>
                                         <div class="font-bold text-white">Healthcare & Clinic Services</div>
                                         <div class="text-[10px] text-slate-400">Regional Search Domination</div>
@@ -213,8 +267,8 @@
                             </div>
                         </div>
 
-                        <!-- Screen Mockup 2 -->
-                        <div class="absolute z-10 w-[75%] mockup-3d-right rounded-2xl overflow-hidden glass-panel border border-white/10 p-2 top-20 right-0">
+                        <!-- Card 2 (Right) -->
+                        <div class="absolute z-10 w-[72%] mockup-3d-right rounded-2xl overflow-hidden glass-panel border border-white/10 p-2 top-16 right-0">
                             <div class="bg-slate-900 rounded-xl overflow-hidden border border-white/10">
                                 <div class="bg-slate-950 px-3 py-2 flex items-center justify-between border-b border-white/10 text-[10px] font-mono text-slate-400">
                                     <span class="flex items-center gap-1.5"><i data-lucide="bar-chart-2" class="w-3 h-3 text-brand-purple"></i> SEO Analytics Dashboard</span>
@@ -222,14 +276,15 @@
                                 </div>
                                 <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop" 
                                      alt="SEO Analytics Dashboard" 
-                                     class="w-full h-44 object-cover opacity-80">
+                                     class="w-full h-40 object-cover opacity-80">
                             </div>
                         </div>
 
-                        <!-- Pedestal Base Effect -->
+                        <!-- Pedestal Ambient Glow Base -->
                         <div class="absolute bottom-0 w-3/4 h-12 bg-gradient-to-t from-brand-cyan/20 to-transparent blur-2xl rounded-full"></div>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -246,7 +301,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
                 <!-- Role 1 -->
                 <div class="glass-panel p-6 rounded-2xl glass-panel-hover transition-all space-y-4 relative overflow-hidden">
                     <div class="flex justify-between items-start">
@@ -307,7 +361,6 @@
                         ผลิตคอนเทนต์สื่อออนไลน์ วางแผนกลยุทธ์แคมเปญโซเชียลมีเดีย นำเสนอพรีเซนเทชัน และสร้างสื่อวิดีโอมาร์เก็ตติ้ง
                     </p>
                 </div>
-
             </div>
         </section>
 
@@ -361,7 +414,7 @@
             </div>
         </section>
 
-        <!-- GENERIC INDUSTRY CASE STUDIES WITH DRIVE LINK BUTTONS -->
+        <!-- GENERIC INDUSTRY CASE STUDIES -->
         <section id="projects" class="space-y-10">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
@@ -374,8 +427,7 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                
-                <!-- Industry 1: Healthcare & Specialist Clinics -->
+                <!-- Industry 1 -->
                 <div class="glass-panel rounded-3xl overflow-hidden glass-panel-hover transition-all border border-white/10 flex flex-col justify-between">
                     <div class="p-6 space-y-4">
                         <div class="relative h-48 rounded-2xl overflow-hidden border border-white/10 group">
@@ -421,7 +473,7 @@
                     </div>
                 </div>
 
-                <!-- Industry 2: Flagship F&B & Culinary Brands -->
+                <!-- Industry 2 -->
                 <div class="glass-panel rounded-3xl overflow-hidden glass-panel-hover transition-all border border-white/10 flex flex-col justify-between">
                     <div class="p-6 space-y-4">
                         <div class="relative h-48 rounded-2xl overflow-hidden border border-white/10 group">
@@ -466,91 +518,6 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- Industry 3: Child Care & Specialized Education -->
-                <div class="glass-panel rounded-3xl overflow-hidden glass-panel-hover transition-all border border-white/10 flex flex-col justify-between">
-                    <div class="p-6 space-y-4">
-                        <div class="relative h-48 rounded-2xl overflow-hidden border border-white/10 group">
-                            <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?q=80&w=1000&auto=format&fit=crop" 
-                                 alt="Child Care Sector SEO" 
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-brand-card via-brand-card/40 to-transparent"></div>
-                            <div class="absolute bottom-3 left-3 right-3 flex justify-between items-center">
-                                <span class="px-3 py-1 rounded-full bg-purple-500/20 text-brand-purple text-[10px] font-mono border border-purple-500/30">Child Development</span>
-                                <span class="text-brand-purple font-mono text-xs font-bold">High Intent Conversion</span>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 class="text-xl font-bold text-white">Child Development & Family Services</h3>
-                            <p class="text-xs text-slate-400 mt-1">
-                                วางโครงสร้างแผนงาน SEO สื่อสารตรงไปยังกลุ่มผู้ปกครอง ครอบคลุมคำค้นหาเกี่ยวกับการประเมินและเสริมสร้างพัฒนาการเด็ก
-                            </p>
-                        </div>
-
-                        <div class="bg-slate-950/80 p-3.5 rounded-xl border border-white/5 space-y-2 font-mono text-xs">
-                            <div class="flex justify-between text-slate-300">
-                                <span>ประเมินพัฒนาการเด็ก [คีย์เวิร์ดความรู้]</span>
-                                <span class="text-emerald-400 font-bold">Rank #1</span>
-                            </div>
-                            <div class="flex justify-between text-slate-300">
-                                <span>ศูนย์พัฒนาการเด็ก [ใกล้ฉัน/พื้นที่]</span>
-                                <span class="text-emerald-400 font-bold">Rank #2</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-6 pt-0 border-t border-white/5 mt-4">
-                        <button onclick="window.open('https://drive.google.com/drive/folders/1ZBrHos4_ZbUcNp0x3cQErBwvhgTzurVr?usp=sharing', '_blank')" 
-                                class="w-full py-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-brand-purple text-brand-purple font-mono text-xs font-bold transition-all flex items-center justify-center gap-2">
-                            <i data-lucide="folder-open" class="w-4 h-4"></i>
-                            <span>ดูพอร์ตเต็มและเคสสตัดดี้ใน Google Drive</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Industry 4: International Medical & Tech Migration -->
-                <div class="glass-panel rounded-3xl overflow-hidden glass-panel-hover transition-all border border-white/10 flex flex-col justify-between">
-                    <div class="p-6 space-y-4">
-                        <div class="relative h-48 rounded-2xl overflow-hidden border border-white/10 group">
-                            <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1000&auto=format&fit=crop" 
-                                 alt="International Medical SEO" 
-                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-brand-card via-brand-card/40 to-transparent"></div>
-                            <div class="absolute bottom-3 left-3 right-3 flex justify-between items-center">
-                                <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-mono border border-emerald-500/30">Multilingual Web</span>
-                                <span class="text-emerald-400 font-mono text-xs font-bold">Technical Migration</span>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 class="text-xl font-bold text-white">International Medical & Enterprise Web</h3>
-                            <p class="text-xs text-slate-400 mt-1">
-                                เคลียร์ข้อจำกัดโค้ดดั้งเดิม (Technical Debt) ย้ายระบบเข้าสู่ WordPress ใหม่ รองรับโครงสร้างเว็บไซต์หลายภาษา (ไทย, อังกฤษ, จีน)
-                            </p>
-                        </div>
-
-                        <div class="bg-slate-950/80 p-3.5 rounded-xl border border-white/5 space-y-2 font-mono text-xs">
-                            <div class="flex justify-between text-slate-300">
-                                <span>Legacy Code Migration</span>
-                                <span class="text-emerald-400 font-bold">Completed</span>
-                            </div>
-                            <div class="flex justify-between text-slate-300">
-                                <span>Multilingual Architecture</span>
-                                <span class="text-emerald-400 font-bold">Completed</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-6 pt-0 border-t border-white/5 mt-4">
-                        <button onclick="window.open('https://drive.google.com/drive/folders/1ZBrHos4_ZbUcNp0x3cQErBwvhgTzurVr?usp=sharing', '_blank')" 
-                                class="w-full py-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-400 text-emerald-400 font-mono text-xs font-bold transition-all flex items-center justify-center gap-2">
-                            <i data-lucide="folder-open" class="w-4 h-4"></i>
-                            <span>ดูพอร์ตเต็มและเคสสตัดดี้ใน Google Drive</span>
-                        </button>
-                    </div>
-                </div>
-
             </div>
         </section>
 
